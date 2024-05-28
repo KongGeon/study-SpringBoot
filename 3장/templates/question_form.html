@@ -1,0 +1,36 @@
+<html layout:decorate="~{layout}">
+  <div layout:fragment="content" class="container">
+    <h5 class="my-3 border-bottom pb-2">질문등록</h5>
+    <form
+      th:action="@{/question/create}"
+      th:object="${questionForm}"
+      method="post"
+    >
+      <!-- th:object 속성이 반드시 필요한데, th:object는 <form>의 입력 항목들이 QuestionForm과 연결된다는 점을 타임리프에 알려주는 역할을 한다. -->
+      <!-- <div
+        class="alert alert-danger"
+        role="alert"
+        th:if="${#fields.hasAnyErrors()}"
+      >
+        #fields.hasAnyErrors()가 true라면 QuestionForm 검증이 실패한 것
+        <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+      </div> -->
+      <div th:replace="~{form_errors :: formErrorsFragment}"></div>
+      <!-- 오류템플릿으로 변경 -->
+      <div class="mb-3">
+        <label for="subject" class="form-label">제목</label>
+        <input type="text" th:field="*{subject}" class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label for="content" class="form-label">내용</label>
+        <textarea
+          th:field="*{content}"
+          class="form-control"
+          rows="10"
+        ></textarea>
+        <!-- name="subject", name="content" 대신 th:field 속성을 사용하도록 변경 -->
+      </div>
+      <input type="submit" value="저장하기" class="btn btn-primary my-2" />
+    </form>
+  </div>
+</html>
