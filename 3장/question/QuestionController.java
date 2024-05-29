@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;//질문등록 Post
 
 import jakarta.validation.Valid; //유효성체크
 import org.springframework.validation.BindingResult; //유효성체크
-
+import org.springframework.web.bind.annotation.RequestParam;//페이징
+import org.springframework.data.domain.Page;//페이징
 import com.mysite.sbb.answer.AnswerForm;//답변폼
 
 @RequestMapping("/question")//프리픽스
@@ -40,16 +41,18 @@ public class QuestionController {
 	   private final QuestionService questionService;
 	  
 	   @GetMapping("/list")
-	  public String list(Model model) { //매개변수로 Model을 지정하면 객체가 자동으로 생성, 롬복(Lombok)이 제공하는 애너테이션으로, final이 붙은 속성을 포함하는 생성자를 자동으로 만들어 주는 역할
+	  public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) { //매개변수로 Model을 지정하면 객체가 자동으로 생성, 롬복(Lombok)이 제공하는 애너테이션으로, final이 붙은 속성을 포함하는 생성자를 자동으로 만들어 주는 역할
 		  List<Question> questionList = this.questionService.getList();
-	        model.addAttribute("questionList", questionList);
+		  Page<Question> paging = this.questionService.getList(page);//페이징
+	        model.addAttribute("paging", paging);//페이징
 	        return "question_list"; //템플릿 이름
 	    }
 	  
 	   @GetMapping(value = "/detail/{id}") //상세페이지
 	    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
 		  //@GetMapping(value = "/question/detail/{id}")에서 사용한 id와 @PathVariable("id")의 매개변수 이름이 이와 같이 동일해야 한다. 
-		  Question question = this.questionService.getQuestion(id);
+		  //http://localhost:8080/question/list?page=0와 같이 GET 방식으로 요청된 URL에서 page값을 가져오기 위해 list 메서드의 매개변수로 @RequestParam(value="page", defaultValue="0") int page가 추가
+		   Question question = this.questionService.getQuestion(id);
 	        model.addAttribute("question", question); 
 		  return "question_detail";  //템플릿 이름
 	    }

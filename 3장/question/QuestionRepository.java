@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;//인터페이스를 리포지터리로 만들기 위해 JpaRepository 인터페이스를 상속
 //CRUD 작업을 처리하는 메서드들을 이미 내장하고 있어 데이터 관리 작업을 좀 더 편리하게 처리할 수 있다.
 
+import org.springframework.data.domain.Page;//페이징을 위한 클래스이다.
+import org.springframework.data.domain.Pageable;//페이징을 처리하는 인터페이스이다.
 
 //public interface QuestionRepository extends JpaRepository<Question, Integer> { //JpaRepository<Question, Integer>는 Question 엔티티로 리포지터리를 생성한다는 의미이다. Question 엔티티의 기본키가 Integer임을 이와 같이 추가로 지정해야 한다.
 //
@@ -19,5 +21,5 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     Question findBySubjectAndContent(String subject, String content); //subject와 content를 함께 조회
     
     List<Question> findBySubjectLike(String subject); //subject 열에서 특정 문자열을 포함하는 데이터를 찾기
-    
+    Page<Question> findAll(Pageable pageable);//페이징
 }

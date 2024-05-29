@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mysite.sbb.answer.AnswerRepository;
 import com.mysite.sbb.question.QuestionRepository;
+import com.mysite.sbb.question.QuestionService;
 
 @SpringBootTest //SbbApplicationTests 클래스가 스프링 부트의 테스트 클래스임을 의미
 class SbbApplicationTests {
@@ -25,6 +26,9 @@ class SbbApplicationTests {
     
     @Autowired
     private AnswerRepository answerRepository;
+    
+    @Autowired
+	private QuestionService questionService;
     
     //@Transactional // 테스트할때 메서드가 종료될 때까지 DB 세션이 유지 //데이터 생성할때 넣었더니 생성이 안되는 현상 있음
     @Test //testJpa 메서드가 테스트 메서드임을 나타낸다. 
@@ -115,6 +119,14 @@ class SbbApplicationTests {
 //
 //        assertEquals(1, answerList.size());
 //        assertEquals("네 자동으로 생성됩니다.", answerList.get(0).getContent());
+    	
+//-------------대량 테스트 데이터 만들기
+//    	 for (int i = 1; i <= 300; i++) {
+//             String subject = String.format("테스트 데이터입니다:[%03d]", i);
+//             String content = "내용무";
+//             this.questionService.create(subject, content);
+//         }
+    	
     	
     }
 }
