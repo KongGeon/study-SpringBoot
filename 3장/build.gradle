@@ -29,6 +29,8 @@ dependencies {
 	 implementation 'org.springframework.boot:spring-boot-starter-thymeleaf' //타임리프
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' //타임리프
 	implementation 'org.springframework.boot:spring-boot-starter-validation' //Spring Boot Validation
+	 implementation 'org.springframework.boot:spring-boot-starter-security'//스프링 시큐리티
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'//스프링 시큐리티
 }
 
 tasks.named('test') {
